@@ -8,6 +8,5 @@ int main() {
     un::bonjour();
     deux::bonjour();
     //exercice_surcharge();
-    //testing();
     return 0;
 }
