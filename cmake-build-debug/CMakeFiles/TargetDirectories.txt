@@ -1,3 +1,0 @@
-C:/Users/leeyu/CLionProjects/LO21-TDS/cmake-build-debug/CMakeFiles/LO21_TDS.dir
-C:/Users/leeyu/CLionProjects/LO21-TDS/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/leeyu/CLionProjects/LO21-TDS/cmake-build-debug/CMakeFiles/rebuild_cache.dir
