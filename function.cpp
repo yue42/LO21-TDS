@@ -1,51 +1,59 @@
-//
-// Created by leeyu on 06/03/2023.
-//
 #include "function.h"
 #include<iostream>
 #include<string>
-//#define PI 3.14159
-using namespace std;
-const double PI = 3.1415926;
-void bonjour() {
-    cout<<"Entrez votre prenom :";
-    string prenom;
-    cin>>prenom;
-    cout<<"Bonjour "<<prenom<<"\n";
+
+void MATH::Fraction::setFraction(int numerateur, int denominateur) {
+    if(denominateur == 0) {
+        std::cout << "Denominateur ne peut pas être 0" << std::endl;
+        return;
+    }
+    this->numerateur = numerateur;
+    this->denominateur = denominateur;
+    simplification();
 }
-void exerciceA(){
-    int r; double p, s;
-    cout<<"donnez le rayon entier d’un cercle:";
-    cin>>r;
-    p=2*PI*r;
-    s=PI*r*r;
-    cout<<"le cercle de rayon "<<r<<"\n";
-    cout<<"a un perimetre de "<<p<<"et une surface de"<<s<<"\n";
-}
-void un::bonjour() {
-    cout<<"你好\n";
-}
-void deux::bonjour() {
-    cout<<"bonjour\n";
-}
-int fct(int x){ std::cout<<"1:"<<x<<"\n"; return 0; }
-int fct(float y){ std::cout<<"2:"<<y<<"\n"; return 0; }
-int fct(int x, float y){ std::cout<<"3:"<<x<<y<<"\n"; return 0; }
-float fct(float x, int y){ std::cout<<"4:"<<x<<y<<"\n"; return 3.14; }
-void exercice_surcharge(){
-    int i=3,j=15;
-    float x=3.14159,y=1.414;
-    char c='A';
-    double z=3.14159265;
-    fct(i); //appel 1
-    fct(x); //appel 2
-    fct(i,y); //appel 3
-    fct(x,j); //appel 4
-    fct(c); //appel 5
-    //fct(i,j); //appel 6
-    //fct(i,c); //appel 7
-    fct(i,z); //appel 8
-    //fct(z,z); //appel 9
+void MATH::Fraction::simplification(){
+// si le numerateur est 0, le denominateur prend la valeur 1
+    if (numerateur==0) { denominateur=1; return; }
+/* un denominateur ne devrait pas être 0; si c’est le cas, on sort de la méthode */
+    if (denominateur==0) return;
+/* utilisation de l’algorithme d’Euclide pour trouver le Plus Grand Commun Denominateur (PGCD) entre le numerateur et le denominateur */
+    int a=numerateur, b=denominateur;
+// on ne travaille qu’avec des valeurs positives...
+    if (a<0) a=-a; if (b<0) b=-b;
+    if (denominateur==1) return;
+    while(a!=b){ if (a>b) a=a-b; else b=b-a; }
+// on divise le numerateur et le denominateur par le PGCD=a
+    numerateur/=a; denominateur/=a;
+// si le denominateur est négatif, on fait passer le signe - au denominateur
+    if (denominateur<0) { denominateur=-denominateur; numerateur=-numerateur; }
 }
 
-//
+void MATH::Fraction::somme(const MATH::Fraction& f1) {
+    int numerateur = this->numerateur * f1.denominateur + this->denominateur * f1.numerateur;
+    int denominateur = this->denominateur * f1.denominateur;
+    this->numerateur = numerateur;
+    this->denominateur = denominateur;
+    simplification();
+}
+MATH::Fraction MATH::operator+(const MATH::Fraction& f1, const MATH::Fraction& f2) {
+    MATH::Fraction f3 = f1;
+    f3.somme(f2);
+    return f3;
+}
+MATH::Fraction MATH::operator+(const MATH::Fraction& f1, const int& f2) {
+    MATH::Fraction f3 = f1;
+    f3.somme(MATH::Fraction(f2, 1));
+    return f3;
+}
+MATH::Fraction MATH::operator+(const int& f1, const MATH::Fraction& f2) {
+    MATH::Fraction f3 = f2;
+    f3.somme(MATH::Fraction(f1, 1));
+    return f3;
+}
+namespace MATH{
+    std::ostream& operator<<(std::ostream& os, const MATH::Fraction& f) {
+        os << f.numerateur << "/" << f.denominateur;
+        return os;
+    }
+}
+

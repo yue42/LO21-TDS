@@ -1,13 +1,16 @@
 #include <iostream>
 #include<string>
 #include "function.h"
-int main() {
-    //std::cout << "Hello, World!" << std::endl;
-    //bonjour();
-    //exerciceA();
-    un::bonjour();
-    deux::bonjour();
-    //exercice_surcharge();
-    //
+using namespace std;
+using namespace MATH;
+int main(){
+    Fraction f1(3,4);
+    Fraction f2(1,6);
+    Fraction f3 = f1 + f2;
+    int a = 1;
+    Fraction f4 = f1 + a;
+    //Fraction f5 = a + f2;
+    cout << f3 << f4;
     return 0;
 }
+
