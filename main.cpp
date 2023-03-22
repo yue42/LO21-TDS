@@ -31,7 +31,7 @@ int& operation(compte* tab,string nom){
         i++;
     }
     return tab[i].solde;
-
+//
 
 }
 void essai_comptes(){
